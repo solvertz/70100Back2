@@ -1,8 +1,12 @@
 import passport from "passport";
 import local from "passport-local";
-import  { hashPassword, comparePassword } from "../utils/hashFunctions.js";
+import  { createPassword, comparePassword } from "../utils/hashFunctions.js";
 import jwt from 'jsonwebtoken'
-import { UserModel }from '../models/user.model.js'
+import jwtStrategy from "passport-jwt";
+
+
+
+import { UserModel } from "../daos/models/user.model.js";
 
 // importtar el modelo de usuario del service 
 
@@ -10,14 +14,17 @@ import { UserModel }from '../models/user.model.js'
 
 const LocalStrategy = local.Strategy;
 
+const JWTStrategy = jwtStrategy.Strategy;
+const ExtractJWT = jwtStrategy.ExtractJwt;
+
 //creamos una función 
 const initializePassport = () =>{
     passport.use("login", new LocalStrategy ({ usernameField: "email",
-        passReqToCallback: true}, async (req, username, password, done )=>{
+        passReqToCallback: true}, async (req, email, password, done )=>{
            
             try {
-            const user = await UserModel.findOne({ email: username });
-
+            const user = await UserModel.findOne({ email });
+ 
             if (!user) {
                 return done(null, false, { message: "User not found" });
             }
@@ -85,7 +92,33 @@ const initializePassport = () =>{
             done(error);
         }
     });
+
+    passport.use("jwt", new JWTStrategy({ jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]), 
+        secretOrKey: "s3cr3t"}, async(payload, done)=>{
+        try{
+            return done(null, payload); 
+        }catch(error){
+            return done(error); 
+        }
+    }
+    ) )
+
+}    
+
+//funcion para facilitarle el el acceso al token a passport 
+
+function cookieExtractor (req){ 
+    let token = null;
+    if(req && req.cookies){
+        token = req.cookies["token"]; //si no paso el token devuelve no autorizado
+    }
+    return token 
 }
+
+
+
+
+
 
 export { initializePassport}; 
 

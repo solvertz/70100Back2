@@ -58,14 +58,27 @@ http://localhost:8085/api/carts/clear/667857c75b4e3131ada682f6
 
 
 
-idProd:66773f6c2c997f443c70b75e    alimento para perro
+*BACKEND II *
 
-❗SOLUCION DE ERRORES:
-<!-- http://localhost:8085/api/carts/667857c75b4e3131ada682f6 --> AL BUSCAR X ID 
-error Error: MissingSchemaError: Schema hasn't been registered for model "products".
-Use mongoose.model(name, schema)
+# **<u>Registrar Usuario Actual:</u>**
+Ruta: /api/auth/register
+Método HTTP: POST
+Descripción: Esta ruta se usa para registrar un nuevo usuario en la aplicación.
 
- en productModel le agregue la products en vez de product
-const productCollection = "products"; Y AHI SI ME DEVOLVIO EL CARRITO!!
+ 
+# **<u>Loguear Usuario:</u>**
+Ruta: /api/auth/login
+Método HTTP: POST
+Descripción: Esta ruta se usa para autenticar a un usuario y devolver un token JWT en una cookie.
 
-❗ VER EL USO DE POPULATE CON EL MIDDLEWARE PRE... 
+
+# **<u>Desloguear Usuario:</u>**
+Ruta: /api/auth/logout
+Método HTTP: POST
+Descripción: Esta ruta se usa para desloguear al usuario, eliminando la cookie de autenticación.
+
+# **<u>Obtener Datos Usuario:</u>**
+
+Ruta: /api/auth/current
+Método HTTP: GET
+Descripción: Esta ruta se usa para obtener información sobre el usuario actualmente autenticado, basada en el token JWT.

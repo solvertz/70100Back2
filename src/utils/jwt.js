@@ -1,15 +1,29 @@
 import jwt from 'jsonwebtoken';
 
 
-const PRIVATE_KEY ="cod3er"; //debe ir en un archivo .env
+const PRIVATE_KEY ="s3cr3t"; //debe ir en un archivo .env
 
 //generateToken: se envia lo q se llama un user o payload=> info que va a contener nuestro token  
 //sub: user.id, : campo optativo buena practica 
-//retorna un jwt sifrado con los datos que le enviamos x parámetro 
+//retorna un jwt cifrado con los datos que le enviamos x parámetro 
 
-//middleware para chequer el q el token exista y sea válido 
+//middleware para chequear elq el token exista y sea válido 
 
-export const generateToken = (user)=> {
+export function generateToken(payload){
+    return jwt.sign(payload, PRIVATE_KEY,{
+        expiresIn: "10m",
+    });
+}
+
+export function verifyToken(token){
+    try {
+        const decoded = jwt.verify(token, PRIVATE_KEY); 
+        return decoded; 
+    } catch (error) {
+       throw new Error("token no valido");  
+    }
+}
+/* export const generateToken = (user)=> {
     const payload = {
         user,
         sub: user.id, 
@@ -39,7 +53,7 @@ export const authToken = (req, res, next) =>{
             error: "Token no valido",
         });
     }
-}; 
+};  */
 
 
 //en el server los importo 

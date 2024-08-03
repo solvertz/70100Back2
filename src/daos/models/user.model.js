@@ -8,7 +8,7 @@ const userSchema = new Schema({
   email: { type: String, require: true, unique: true },
   age: { type: Number, require: true },
   password: { type: String, require: true },
-  cart: {},
+  cart: { type: Schema.Types.ObjectId, ref: "cart" },
   role: {type: String, default: 'user'},
 });
 
