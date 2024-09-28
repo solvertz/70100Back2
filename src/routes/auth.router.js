@@ -16,7 +16,7 @@ router.post("/register", async(req, res)=>{
     if(!first_name || !last_name || !email || !age || !password ){
         return res.status(400).json({ error: "All fields are required" });
     }
-
+ 
     try {
         //hasheamos la contraseña 
         const hashPassword = await createPassword(password);

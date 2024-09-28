@@ -82,3 +82,8 @@ Descripción: Esta ruta se usa para desloguear al usuario, eliminando la cookie 
 Ruta: /api/auth/current
 Método HTTP: GET
 Descripción: Esta ruta se usa para obtener información sobre el usuario actualmente autenticado, basada en el token JWT.
+
+
+
+ERRORES: 
+Me registro ok, al hacer login devuelve  -> Cannot POST /api/login
