@@ -108,7 +108,7 @@ app.get("/realTimeProducts", (req, res)=>{
 
 
 
-const PORT = 8085;
+const PORT = 8080;
 
 const httpServer = app.listen(PORT, ()=> console.log(`servidor ok en ${PORT}` ));
 
